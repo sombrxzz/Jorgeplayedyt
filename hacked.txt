@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Hacked By /Sombrx</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      height: 100vh;
+      background: black;
+    }
+    .centered-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      z-index: 1;
+    }
+    .centered-text {
+      color: white;
+      font-size: 2.5em;
+      text-align: center;
+      font-family: monospace, 'Courier New', Courier;
+      text-shadow: 0 0 10px #fff, 0 0 25px #fff, 0 0 50px #fff;
+      margin-bottom: 30px;
+    }
+    .alert-text {
+      color: #ff2222;
+      font-size: 1.5em;
+      text-align: center;
+      font-family: monospace, 'Courier New', Courier;
+      font-weight: bold;
+      text-shadow: 0 0 6px #ff2222, 0 0 16px #ff0000;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: block;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="star-canvas"></canvas>
+  <div class="centered-container">
+    <div class="centered-text">Hacked By /Sombrx</div>
+    <div class="alert-text">Hey admin! This site was hacked due to a programming error. Fix it or you'll be attacked again.</div>
+  </div>
+  <script>
+    const canvas = document.getElementById('star-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    const STAR_COUNT = 120;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createStars() {
+      stars = [];
+      for (let i = 0; i < STAR_COUNT; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.2 + 0.5,
+          speed: Math.random() * 0.7 + 0.3
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      for (const star of stars) {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.r, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+    }
+
+    function animateStars() {
+      for (const star of stars) {
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+          star.x = Math.random() * canvas.width;
+          star.y = 0;
+        }
+      }
+      drawStars();
+      requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      createStars();
+    });
+
+    resizeCanvas();
+    createStars();
+    animateStars();
+  </script>
+</body>
+</html>
